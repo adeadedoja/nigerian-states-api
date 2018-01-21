@@ -15,7 +15,7 @@ const lgaSchema = new mongoose.Schema({
     ref: 'State',
     required: 'Lga should have a valid State!',
   },
-}, { collection: 'state', timestamps: true });
+}, { collection: 'lga', timestamps: true });
 
 
 module.exports = mongoose.model('Lga', lgaSchema);
