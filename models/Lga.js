@@ -10,7 +10,7 @@ const lgaSchema = new mongoose.Schema({
     require: 'Please enter a valid Lga',
     unique: true,
   },
-  stateName: {
+  stateId: {
     type: mongoose.Schema.ObjectId,
     ref: 'State',
     required: 'Lga should have a valid State!',
