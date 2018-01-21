@@ -33,9 +33,9 @@ export const stateType = new GraphQLObjectType({
 });
 
 
-export const postInputType = new GraphQLInputObjectType({
-  name: 'PostInput',
-  description: 'Create New Post',
+export const stateInputType = new GraphQLInputObjectType({
+  name: 'StateInput',
+  description: 'Create New State',
   fields: () => ({
     name: {
       type: GraphQLString,

@@ -20,7 +20,7 @@ export const lgaType = new GraphQLObjectType({
 
 
 export const lgaInputType = new GraphQLInputObjectType({
-  name: 'LgatInput',
+  name: 'LgaInput',
   description: 'Create New Lga',
   fields: () => ({
     name: {
