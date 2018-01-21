@@ -26,7 +26,7 @@ export const stateType = new GraphQLObjectType({
       type: new GraphQLList(lgaType),
       resolve(state) {
         const { _id } = state;
-        return LgaModel.find({ stateId: _id }).exec();
+        return LgaModel.find({ stateId: _id }).sort({ name: 'asc' }).exec();
       },
     },
   }),
