@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../server/graphql/mutations/lga/index.js"],"names":["Addlga"],"mappings":";;;;;;AAAA;;;;;;kBAEe;AACbA;AADa,C","file":"index.js","sourcesContent":["import Addlga from './add';\n\nexport default {\n  Addlga,\n};\n\n"]}

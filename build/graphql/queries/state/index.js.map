@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../server/graphql/queries/state/index.js"],"names":["States","State"],"mappings":";;;;;;AAAA;;;;AACA;;;;;;kBAEe;AACbA,4BADa;AAEbC;AAFa,C","file":"index.js","sourcesContent":["import States from './multiple';\nimport State from './single';\n\nexport default {\n  States,\n  State,\n};\n\n"]}
