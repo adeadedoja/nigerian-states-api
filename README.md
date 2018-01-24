@@ -10,6 +10,12 @@ graphQL API that lets you get the list of states and local goverment areas of ea
 
 # Use
 
+Endpoint
+
+```
+https://ng-states.herokuapp.com/graphql
+```
+
 ## Query to get all States
 
 ```
