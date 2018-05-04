@@ -1,20 +1,54 @@
-const express = require('express');
-const graphqlHTTP = require('express-graphql');
-const logger = require('morgan');
-const cors = require('cors');
+import fs from 'fs';
+import express from 'express';
+import graphqlHTTP from 'express-graphql';
+import morgan from 'morgan';
+import FileStreamRotator from 'file-stream-rotator';
+import cors from 'cors';
 
-const routes = require('./routes/index');
-
+// Import the Logger Module
+import loggerInit from './config/logger';
+// Import the Route Module
+import routes from './routes';
 
 // GraphQL Schema
 import schema from './graphql';
-import { request } from 'http';
 
+const logDirectory = './log';
+const checkLogDir = fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
 const app = express();
 
+// initialize logger and Stream
+let accessLogStream;
+let logger;
+
+if (app.get('env') === 'development') {
+  logger = loggerInit('development');
+} else if (app.get('env') === 'production') {
+  logger = loggerInit('production');
+} else if (app.get('env') === 'test') {
+  logger = loggerInit('test');
+} else {
+  logger = loggerInit();
+}
+
+global.logger = logger;
+logger.info('States GraphQL Application Server starting...');
+logger.debug("Overriding 'Express' logger");
+
+
+if (checkLogDir) {
+  accessLogStream = FileStreamRotator.getStream({
+    date_format: 'YYYYMMDD',
+    filename: `${logDirectory}/StatesAPI-%DATE%.log`,
+    frequency: 'weekly',
+    verbose: false,
+  });
+}
+
+
 app.use(cors());
-app.use(logger('dev'));
+app.use(morgan('combined', { stream: accessLogStream }));
 
 // Handle our routes!
 app.use('/', routes);
@@ -40,6 +74,10 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // add this line to include winston logging
+  logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
 
   // render the error page
   res.status(err.status || 500);
